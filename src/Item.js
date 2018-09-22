@@ -79,7 +79,7 @@ export default class Item {
 
         var str = this.textField.value.replace( /\s\s+/g, ' ' );//remove duplicate spaces
 
-        //prevent stack overflow (recursive call)
+        //prevent stack overflow (recursive call to self )
         var reg = new RegExp( "\\b(" + name + ")\\b\\s*\\(", "gi" );
         if( reg.test( str ) ){
             this.valid = false;

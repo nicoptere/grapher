@@ -15,7 +15,7 @@ export default class functions {
 
 
         // GLSL methods
-        // //todo implement GLSL methods & types
+        // TODO implement GLSL methods (& types?!)
         var declarations = {
 
             smoothstep :    "function(a,b,t) { return mix( a,b, t * t * (3.0 - 2.0 * t)); }",

@@ -74,10 +74,18 @@ export default class Item {
         }
 
         let name = this.name;
+
         this.label.innerText = "\t" + name + "\t";
-        // this.colorField.value = this.color;
 
         var str = this.textField.value.replace( /\s\s+/g, ' ' );//remove duplicate spaces
+
+        //prevent stack overflow (recursive call)
+        var reg = new RegExp( "\\b(" + name + ")\\b\\s*\\(", "gi" );
+        if( reg.test( str ) ){
+            this.valid = false;
+            return;
+        }
+
         try{
             eval("window[name] = functions[name] = function(x){ return "+str+"; }; " );
             functions[name]( 1 );

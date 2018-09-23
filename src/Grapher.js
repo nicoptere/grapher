@@ -3,6 +3,7 @@ import Item from "./Item";
 import functions from "./functions";
 import storage from "./storage";
 import Draggable from "./Draggable";
+import Inline from "./parser/Inline";
 
 let startTime;
 export default class Grapher {
@@ -44,13 +45,31 @@ export default class Grapher {
 
         let item = new Item( x );
 
-        this.container.appendChild(item.domeElement);
-
         item.deleteBtn.addEventListener("mousedown", ()=>{this.dispose(item);} );
+        item.inlineBtn.addEventListener("mouseup", ()=>{this.inline(item);} );
 
         this.items.push( item );
 
+        this.container.appendChild(item.domeElement);
+
         return item;
+
+    }
+
+    inline( toInline ){
+
+                var r = Inline.compute( toInline.method );
+                console.log( r );
+                toInline.method = r;
+                toInline.update();
+
+        if( toInline.valid ){
+            try{
+            }catch( e ){
+                console.log( "fuck" );
+            }
+        }
+
 
     }
 
@@ -129,11 +148,11 @@ export default class Grapher {
             delete s.newName;
 
         });
-        this.items = newItems;
+        this.container.removeChild( toDelete.domeElement );
 
+        this.items = newItems;
         storage.update(this.items);
 
-        this.container.removeChild( toDelete.domeElement );
 
     }
 

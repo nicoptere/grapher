@@ -3,10 +3,7 @@ export default class functions {
 
     static init(){
 
-        window.functions = functions;
-
-
-
+        //creates Math builtin functions
 
         var dictionary = {};
         var builtInfunctions = ["E", "LN10", "LN2", "LOG10E", "LOG2E", "PI", "SQRT1_2", "SQRT2", "abs", "acos", "acosh",
@@ -16,40 +13,48 @@ export default class functions {
 
         builtInfunctions.forEach( function(f){
             window[f] = Math[f];
-            dictionary[f] = f + "(?)";
             functions[f] = Math[f];
         });
 
 
         // GLSL methods
+
         //from http://www.shaderific.com/glsl-functions/
+
         var declarations = {
 
-            radians :       "function(x) { return x * ( Math.PI / 180. ); }",
-            degrees :       "function(x) { return x * ( 180. / Math.PI ); }",
-            smoothstep :    "function(a,b,x) { return mix( a,b, x * x * (3.0 - 2.0 * x)); }",
-            exp2 :          "function(x) { return pow( x, 2. ); }",
-            log2 :          "function(x) { return log( x ); }",
-            inversesqrt :   "function(x) { return 1 / sqrt( x ); }",
-            mix :           "function(a,b,x) { return a * ( 1. - x) + b * x; }",
-            fract :         "function(x) { return x % 1.; }",
-            mod :           "function(x,a) { return x % a; }",
-            sign :          "function(x) { return x >= 0. ? 1. : -1.; }",
-            step :          "function(x, a) { return x < a ? 0. : 1.; }",
-            clamp :         "function(x, a, b){ return min( b, max( a, x ) );}",
-            // length :        "function(x){ return abs( x );}",
-            dot :           "function(a,b){ return ( a*b );}",
-            distance :      "function(a,b){ return abs( a-b );}",
-            normalize :     "function(x){ return 1.;}"
+            radians :       "function(__x){ return __x * ( 3.141592653589793 / 180. ); }",
+            degrees :       "function(__x){ return __x * ( 180. / 3.141592653589793 ); }",
+            exp2 :          "function(__x){ return pow( __x, 2. ); }",
+            log2 :          "function(__x){ return log( __x ); }",
+            inversesqrt :   "function(__x){ return 1 / sqrt( __x ); }",
+            fract :         "function(__x){ return __x % 1.; }",
+            sign :          "function(__x){ return __x >= 0. ? 1. : -1.; }",
+            normalize :     "function(__x){ return 1.;}",
 
+            mod :           "function(__x,__a){ return __x % __a; }",
+            step :          "function(__x,__a){ return __x < __a ? 0. : 1.; }",
+            dot :           "function(__a,__b){ return ( __a*__b );}",
+            distance :      "function(__a,__b){ return abs( __a-__b );}",
+
+            clamp :         "function(__x,__a,__b){ return min( __b, max( __a, __x ) );}",
+            smoothstep :    "function(__a,__b,__x){ return mix( __a,__b, __x * __x * (3.0 - 2.0 * __x)); }",
+            mix :           "function(__a,__b,__x){ return __a * ( 1. - __x) + __b * __x; }",
+
+            /*
+             invalid ; length is a member of JS objects
+             also the length of a scalar its absolute value...
+             length :        "function(__x){ return abs( __x );}",
+            */
         };
-
         for ( const key in declarations ){
             eval(  "window[ key ] = functions[ key ] = " + declarations[key] );
+            dictionary[key] = declarations[key];
         }
 
-
+        //makes the objects available globally (WIP)
         functions.dictionary = dictionary;
+        window.functions = functions;
     }
 
 }

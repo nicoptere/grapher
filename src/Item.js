@@ -13,8 +13,6 @@ export default class Item {
     constructor( str ){
 
         this.id = Item.id;
-        this.method = str;
-
         let name = this.name;
 
         let domElement = document.createElement('div');
@@ -53,13 +51,20 @@ export default class Item {
         deleteBtn.value = "delete";
         domElement.appendChild(deleteBtn);
 
+        let inlineBtn = document.createElement( 'input' );
+        inlineBtn.type = "button";
+        inlineBtn.value = "inline";
+        domElement.appendChild(inlineBtn);
+
         this.label = label;
         this.checkbox = checkbox;
         this.colorField = colorField;
-        this.deleteBtn = deleteBtn;
         this.flag = flag;
         this.textField = textField;
+        this.deleteBtn = deleteBtn;
+        this.inlineBtn = inlineBtn;
 
+        this.method = str;
         this.update();
         Item.id++;
 
@@ -74,8 +79,7 @@ export default class Item {
 
         this.selected = document.activeElement === this.textField;
 
-        this.textField.value.replace( /\s\s+/g, ' ' );//remove duplicate spaces
-        this.method = this.textField.value;
+        this.method = this.textField.value.replace( /\s\s+/g, ' ' );//remove duplicate spaces
 
         //prevent stack overflow (recursive call to self )
         var reg = new RegExp( "\\b(" + name + ")\\b\\s*\\(", "gi" );
@@ -92,7 +96,7 @@ export default class Item {
             this.valid = false;
             return;
         }
-        functions.dictionary[name] = "(" + this.method.replace( /x\b/gi, "?" ) + ")";
+        functions.dictionary[name] = this.method;
 
     }
 
@@ -111,7 +115,10 @@ export default class Item {
     }
 
     get method(){ return this._method; }
-    set method( value ){ this._method = value; }
+    set method( value ){
+        this._method = value;
+        this.textField.value = value;
+    }
 
     get selected(){ return this._selected; }
     set selected( value ){ this._selected = value; }

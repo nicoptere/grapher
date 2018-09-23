@@ -22,15 +22,25 @@ export default class functions {
 
 
         // GLSL methods
-        // TODO implement GLSL methods (& types?!)
+        //from http://www.shaderific.com/glsl-functions/
         var declarations = {
 
-            smoothstep :    "function(a,b,t) { return mix( a,b, t * t * (3.0 - 2.0 * t)); }",
-            mix :           "function(a,b,t) { return a * (1 - t) + b * t; }",
-            fract :         "function(x) { return x % 1; }",
+            radians :       "function(x) { return x * ( Math.PI / 180. ); }",
+            degrees :       "function(x) { return x * ( 180. / Math.PI ); }",
+            smoothstep :    "function(a,b,x) { return mix( a,b, x * x * (3.0 - 2.0 * x)); }",
+            exp2 :          "function(x) { return pow( x, 2. ); }",
+            log2 :          "function(x) { return log( x ); }",
+            inversesqrt :   "function(x) { return 1 / sqrt( x ); }",
+            mix :           "function(a,b,x) { return a * ( 1. - x) + b * x; }",
+            fract :         "function(x) { return x % 1.; }",
             mod :           "function(x,a) { return x % a; }",
-            sign :          "function(x) { return x >= 0 ? 1 : -1; }",
-            clamp :         "function(x, min, max) {return Math.min( max, Math.max( min, x ) );}",
+            sign :          "function(x) { return x >= 0. ? 1. : -1.; }",
+            step :          "function(x, a) { return x < a ? 0. : 1.; }",
+            clamp :         "function(x, a, b){ return min( b, max( a, x ) );}",
+            // length :        "function(x){ return abs( x );}",
+            dot :           "function(a,b){ return ( a*b );}",
+            distance :      "function(a,b){ return abs( a-b );}",
+            normalize :     "function(x){ return 1.;}"
 
         };
 

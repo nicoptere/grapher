@@ -12,7 +12,7 @@ it is meant to quickly test 2D functions in a visual way.
 * self contained, no dependencies
 * small-ish (could be smaller)
 * draggable / resizable window
+* implement GLSL methods
 
 ### todo
-* implement GLSL methods
 * parse and inline methods

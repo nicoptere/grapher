@@ -49,7 +49,7 @@ module.exports = {
     stats: {
         colors: true
     },
-    watch: true,
+    watch: false,
     watchOptions: {
         aggregateTimeout: 300,
         ignored: "/node_modules/"

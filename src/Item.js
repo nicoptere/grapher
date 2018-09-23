@@ -67,35 +67,32 @@ export default class Item {
 
     update( time = 0 ){
 
-        this.active = this.checkbox.checked;
-
-        if( document.activeElement === this.textField ){
-            this.selected = true;
-        }
-
         let name = this.name;
-
         this.label.innerText = "\t" + name + "\t";
 
-        var str = this.textField.value.replace( /\s\s+/g, ' ' );//remove duplicate spaces
+        this.active = this.checkbox.checked;
+
+        this.selected = document.activeElement === this.textField;
+
+        this.textField.value.replace( /\s\s+/g, ' ' );//remove duplicate spaces
+        this.method = this.textField.value;
 
         //prevent stack overflow (recursive call to self )
         var reg = new RegExp( "\\b(" + name + ")\\b\\s*\\(", "gi" );
-        if( reg.test( str ) ){
+        if( reg.test( this.method ) ){
             this.valid = false;
             return;
         }
 
         try{
-            eval("window[name] = functions[name] = function(x){ return "+str+"; }; " );
+            eval("window[name] = functions[name] = function(x){ return "+ this.method +"; }; " );
             functions[name]( 1 );
             this.valid = true;
         }catch(e){
             this.valid = false;
             return;
         }
-        functions.dictionary[name] = "(" + str.replace( /x\b/gi, "?" ) + ")";
-        this.method = str;
+        functions.dictionary[name] = "(" + this.method.replace( /x\b/gi, "?" ) + ")";
 
     }
 

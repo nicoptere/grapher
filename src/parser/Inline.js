@@ -3,7 +3,7 @@ import AbstractSyntaxTree from "./AbstractSyntaxTree";
 import Token from "./Token";
 import functions from "../functions";
 
-let debug = true;
+let debug = false;
 export default class Inline{
 
     static compute( str ){

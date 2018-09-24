@@ -58,29 +58,40 @@ export default class Grapher {
 
     inline( toInline ){
 
-                var r = Inline.compute( toInline.method );
-                console.log( r );
+        if( toInline.valid ){
+
+            //check if the method uses custom function
+
+            let canInline = false;
+            for( const key in functions.dictionary ){
+                let reg = new RegExp( "\\b(" + key + ")\\b\\s*\\(", "gi" );
+                if( reg.test( toInline.method ) === true ){
+                    canInline = true;
+                    break;
+                }
+            }
+
+            //if so, inlines the item's method
+
+            if( canInline ) {
+                let r = Inline.compute(toInline.method);
+                console.log(r);
                 toInline.method = r;
                 toInline.update();
-
-        if( toInline.valid ){
-            try{
-            }catch( e ){
-                console.log( "fuck" );
             }
         }
-
 
     }
 
     dispose( toDelete ){
 
-        var i = this.items.indexOf(toDelete);
+        let i = this.items.indexOf(toDelete);
         if( i === -1 )return;
 
         //new re-indexed list
+
         let id = 0;
-        var newItems = this.items.filter( (it)=>{
+        let newItems = this.items.filter( (it)=>{
 
             it.textField.classList.remove("highlight-text-field");
 
@@ -106,10 +117,9 @@ export default class Grapher {
         });
 
         //checks if the method to delete is used by other methods
-        var reg = new RegExp( "\\b(" + toDelete.name + ")\\b\\s*\\(", "gi" );
-        var usage = [];
+        let reg = new RegExp( "\\b(" + toDelete.name + ")\\b\\s*\\(", "gi" );
+        let usage = [];
         this.items.forEach((s)=>{
-
             if( s.name === toDelete.name ) return;
             if( reg.test( s.method ) === true ){
                 usage.push( s );
@@ -134,9 +144,10 @@ export default class Grapher {
         }
 
         //replace custom functions usage with new names
+
         newItems.forEach((s)=>{
 
-            var reg = new RegExp( "\\b(" + s.name + ")\\b\\s*\\(", "gi" );
+            let reg = new RegExp( "\\b(" + s.name + ")\\b\\s*\\(", "gi" );
             newItems.forEach((o)=> {
 
                 if( s === o )return;

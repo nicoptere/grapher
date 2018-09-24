@@ -74,9 +74,7 @@ export default class Grapher {
             //if so, inlines the item's method
 
             if( canInline ) {
-                let r = Inline.compute(toInline.method);
-                console.log(r);
-                toInline.method = r;
+                toInline.method = Inline.compute(toInline.method);
                 toInline.update();
             }
         }

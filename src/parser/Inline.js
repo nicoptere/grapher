@@ -3,7 +3,7 @@ import AbstractSyntaxTree from "./AbstractSyntaxTree";
 import Token from "./Token";
 import functions from "../functions";
 
-let debug = false;
+let debug = true;
 export default class Inline{
 
     static compute( str ){
@@ -19,7 +19,7 @@ export default class Inline{
             let t = operations[i];
             if( t.type === Token.LITERAL || t.type === Token.VARIABLE )continue;
 
-            if( debug )console.log( "RPN: " + operations.reduce( function (a, t){return a += t.value + ","; }, "") );
+            // if( debug )console.log( "RPN: " + operations.reduce( function (a, t){return a += t.value + ","; }, "") );
 
             if(  t.type === Token.OPERATOR ){
                 let op0 = operations[i-2].value;
@@ -27,10 +27,9 @@ export default class Inline{
                 value = op0 + t.value + op1;
                 operations.splice( i - 2, 3, new Token( Token.LITERAL, value ) );
                 i-=2;
-                // if( debug )console.log( "OP", t.value, value );
             }
 
-            if(  t.type === Token.FUNCTION ){
+            if( t.type === Token.FUNCTION ){
 
                 if( functions[ t.value ] === undefined ){
                     console.warn ("function doesn't exist");
@@ -46,17 +45,19 @@ export default class Inline{
 
                     let vars = [];
                     for( let j = argumentsCount; j > 0; j-- ){
-                        vars.push( "(" + operations[i-j].value + ")" );
+
+                        if( /[0-9.]+/g.test( operations[i-j].value )
+                        ||  operations[i-j].value.length === 1 ){
+                            vars.push( operations[i-j].value );
+                        }else{
+                            vars.push( "(" + operations[i-j].value + ")" );
+                        }
                     }
-                    // if( debug )console.log( "\t", vars);
 
                     //gets the arguments names
                     let func = ""+ functions[t.value].toString().replace(/\n/gi, " " ).replace(/\r/gi, " ");
                     let args = Inline.getArguments(func);
-                    if( debug )console.log( "\tfunction : ", func);
                     if( debug )console.log("\targs: " + JSON.stringify(args), "vars: " + JSON.stringify(vars));
-
-
 
                     //inlines arguments
                     func = func.replace( /.*return|;\s+?}|;}|}/gi, '' );
@@ -64,7 +65,6 @@ export default class Inline{
 
                         let reg = new RegExp( "\\b"+args[k]+"\\b", "gi" );
                         func = func.replace( reg, vars[k] );
-                        if( debug )console.log( '\t', func );
 
                     }
                     value = "(" + func.replace(/\s/gi, '') + ")";

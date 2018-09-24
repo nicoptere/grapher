@@ -18,5 +18,5 @@ it is meant to quickly test 2D functions in a visual way.
 
 [demo](https://rawgit.com/nicoptere/grapher/master/build/index.html)
 
-####notes
+#### notes
 parsing and inlining come from [this insightful article](https://medium.freecodecamp.org/parsing-math-expressions-with-javascript-7e8f5572276e) by [Shalvah A.](https://twitter.com/theshalvah)

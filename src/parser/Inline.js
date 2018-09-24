@@ -3,7 +3,7 @@ import AbstractSyntaxTree from "./AbstractSyntaxTree";
 import Token from "./Token";
 import functions from "../functions";
 
-let debug = false;
+let debug = true;
 export default class Inline{
 
     static compute( str ){
@@ -40,7 +40,7 @@ export default class Inline{
                 let argumentsCount = functions[t.value].length;
 
                 //inlines custom function
-                if( functions[t.value] ){
+                if( functions.dictionary[t.value] !== undefined ){
 
                     if( debug )console.log("custom");
 
@@ -87,7 +87,8 @@ export default class Inline{
             }
 
         }
-        if( debug )console.log( result, operations[0].value, "> " + operations.join( ",").substr(0,-1) )
+
+        if( debug )console.log( operations[0].value );
 
         return operations[0].value;
 
@@ -95,8 +96,12 @@ export default class Inline{
 
     static getArguments(func) {
         let args = /\(\s*([^)]+?)\s*\)/.exec(func);
-        if (args[1]) {
-            args = args[1].split(/\s*,\s*/);
+        try{
+            if (args[1]) {
+                args = args[1].split(/\s*,\s*/);
+            }
+        }catch( e ){
+            console.log( func, args );
         }
         return args;
     }

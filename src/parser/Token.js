@@ -15,7 +15,7 @@ const isDot = new RegExp(/\./);
 const isDigit = new RegExp(/\d/);
 const isLetter = new RegExp(/[a-z]/i);
 const highPrecedence = new RegExp(/[*/]/);
-const isOperator = new RegExp(/[*+/-]/);
+const isOperator = new RegExp(/[*+/-><]|<=|>=|==/);
 const isLeftParenthesis = new RegExp(/\(/);
 const isRightParenthesis = new RegExp(/\)/);
 

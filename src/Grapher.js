@@ -145,6 +145,7 @@ export default class Grapher {
 
         //replace custom functions usage with new names
 
+        Item.id = 0;
         newItems.forEach((s)=>{
 
             let reg = new RegExp( "\\b(" + s.name + ")\\b\\s*\\(", "gi" );
@@ -157,6 +158,7 @@ export default class Grapher {
             s.id = s.newId;
             delete s.newId;
             delete s.newName;
+            Item.id++;
 
         });
         this.container.removeChild( toDelete.domeElement );

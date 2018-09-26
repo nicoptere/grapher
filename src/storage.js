@@ -5,9 +5,7 @@ export default class storage {
 
         //rebuilds formulas if they were stored locally
         var customMethods = JSON.parse( localStorage.getItem('customMethods') );
-        //customMethods   = [ "tan( sin( fract( x * PI+time ) ) )*cos( x * PI * 2 - time)", "clamp( a( x-time ) * a ( x ),0,1)", "cos( x )", "x*c(x)*sin( x )" ]
 
-        console.log( customMethods)
         if( customMethods !== null && customMethods.length > 0 ){
 
             customMethods.forEach( function(s){

@@ -19,15 +19,12 @@ export default class Renderer{
         holder.appendChild( header );
         this.header = header;
 
-
         const canvas = document.createElement("canvas");
         w = canvas.width = width;
         h = canvas.height = height;
         canvas.style.pointerEvents = "none";
         this.ctx = ctx = canvas.getContext('2d');
         holder.appendChild( canvas );
-
-
 
         main.container.appendChild( holder );
         this.container = main.container;

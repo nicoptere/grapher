@@ -3,7 +3,7 @@ import AbstractSyntaxTree from "./AbstractSyntaxTree";
 import Token from "./Token";
 import functions from "../functions";
 
-let debug = true;
+let debug = false;
 export default class Inline{
 
     static compute( str ){
@@ -32,7 +32,7 @@ export default class Inline{
             if( t.type === Token.FUNCTION ){
 
                 if( functions[ t.value ] === undefined ){
-                    console.warn ("function doesn't exist");
+                    console.warn ("can't inline, function doesn't exist:", t.value);
                     break;
                 }
 

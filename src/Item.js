@@ -144,14 +144,12 @@ export default class Item {
 
     get canInline(){
 
-
         let reg = /\b[a-z]([0-9].*)?\b\s?\(/gi;
-        // console.log( reg.test( this.method ), this.method, this.method.ma );
         if( reg.test( this.method ) === true ){
-            this.inlineBtn.disabled = false;
+            this.inlineBtn.style.visibility = 'visible';
             return true;
         }
-        this.inlineBtn.disabled = true;
+        this.inlineBtn.style.visibility = 'hidden';
         return false;
     }
 }

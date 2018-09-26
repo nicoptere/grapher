@@ -46,7 +46,7 @@ export default class Grapher {
         let item = new Item( x );
 
         item.deleteBtn.addEventListener("mousedown", ()=>{this.dispose(item);} );
-        item.inlineBtn.addEventListener("mouseup", ()=>{this.inline(item);} );
+        item.inlineBtn.addEventListener("mousedown", ()=>{this.inline(item);} );
 
         this.items.push( item );
 

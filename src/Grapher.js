@@ -58,25 +58,14 @@ export default class Grapher {
 
     inline( toInline ){
 
-        if( toInline.valid ){
-
-            //check if the method uses custom function
-
-            let canInline = false;
-            for( const key in functions.dictionary ){
-                let reg = new RegExp( "\\b(" + key + ")\\b\\s*\\(", "gi" );
-                if( reg.test( toInline.method ) === true ){
-                    canInline = true;
-                    break;
-                }
-            }
+        //check the item's the method uses custom function
+        if( toInline.canInline ){
 
             //if so, inlines the item's method
+            toInline.method = Inline.compute(toInline.method);
+            toInline.update();
+            toInline.removeInlineButton();
 
-            if( canInline ) {
-                toInline.method = Inline.compute(toInline.method);
-                toInline.update();
-            }
         }
 
     }

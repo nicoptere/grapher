@@ -63,6 +63,7 @@ export default class Item {
         this.textField = textField;
         this.deleteBtn = deleteBtn;
         this.inlineBtn = inlineBtn;
+        this.domElement = domElement;
 
         this.method = str;
         this.update();
@@ -97,6 +98,14 @@ export default class Item {
             return;
         }
         functions.dictionary[name] = this.method;
+
+        this.canInline;
+    }
+
+
+    removeInlineButton(){
+
+        // this.domElement.removeChild(this.inlineBtn);
 
     }
 
@@ -133,4 +142,16 @@ export default class Item {
         }
     }
 
+    get canInline(){
+
+
+        let reg = /\b[a-z]([0-9].*)?\b\s?\(/gi;
+        // console.log( reg.test( this.method ), this.method, this.method.ma );
+        if( reg.test( this.method ) === true ){
+            this.inlineBtn.disabled = false;
+            return true;
+        }
+        this.inlineBtn.disabled = true;
+        return false;
+    }
 }

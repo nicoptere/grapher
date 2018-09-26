@@ -15,7 +15,7 @@ export default class storage {
             });
 
         }else{
-            ["mix( b(x), c(x ), d(x )) ", "smoothstep( .25,.75,abs(sin(x+time)))", "fract(abs(x)*20)>.5", "sin(x*PI+time*2)*.25"]
+            ["mix( b(x), c(x ), d(x )) ", "smoothstep( .25,.75,abs(sin(x+time)))", "step( fract(abs(x)*20),.5 )", "sin(x*PI+time*2)*.25"]
             .forEach((x,i)=>{
                 var item = main.addNew(x);
                 item.active = i === 0;
